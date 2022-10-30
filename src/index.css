@@ -1,0 +1,136 @@
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html, body{
+  height: 80vh;
+  margin: 1rem;
+}
+
+body{
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+background-image: url('/public/cardsImages/background.png');
+background-size: auto;
+background-repeat: no-repeat;
+background-position: center center;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
+
+h1{
+  font-size: 30px;
+  color: black;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 5px;
+  border: 4px solid black;
+  background-color: #FFDE00;
+  border-radius: 9px;
+  padding: 4px;
+}
+
+h2{
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: black;
+  font-weight: 900;
+  text-align: center;
+  background-color: #ed005f;
+  border-radius: 15px;
+  padding: 6px;
+}
+
+.btn {
+  outline: 0;
+  grid-gap: 8px;
+  align-items: center;
+  background-color: #FFDE00;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: bold;
+  gap: 8px;
+  justify-content: center;
+  line-height: 1.5;
+  overflow: hidden;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  transition: all .14s ease-out;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+  .btn:hover {
+      box-shadow: 4px 4px 0 #000;
+      transform: translate(-4px,-4px);
+  }
+  .btn:focus-visible{
+      outline-offset: 1px;
+  }
+
+
+
+.container{
+  height: 510px;
+  width: 510px;
+  /* background-color: grey; */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 0.5em;
+}
+
+.card{
+  background-image: url("/public/cardsImages/cardBackground.png");
+  background-size: contain;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transform: rotateY(180deg);
+  transition: transform 0.5s;
+}
+
+
+.card img{
+  max-width: 80%;
+  max-height: 80%;
+  transition: transform 0.5s;
+  transform: scale(0);
+}
+
+
+
+.card.active{
+  transform: rotateY(0);
+  background-color: white;
+  background-image: none;
+}
+
+.card.active img{
+  transform: scale(1);
+}
+
+.card.wrong{
+  background-color: red;
+}
+
+.card.correct{
+  background-color: green;
+}

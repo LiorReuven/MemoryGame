@@ -2,30 +2,29 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Card from './Card';
 
-const Cards = ({items, setItems, tries, setTries, restartGame}) => {
-  
+const Cards = ({ items, setItems, tries, setTries, restartGame }) => {
   const [prev, setPrev] = useState(-1);
-
 
   useEffect(() => {
     //LOSE CHECK
-    if (tries === 0) {
-      const answer = window.confirm('you LOST, Restart the game?')
-      if (answer) {
-        restartGame()
-        setPrev(-1)
-      } else {
-        setTries("You Lost")
-      }
-    }
-  }, [tries, restartGame, setTries])
 
-  
+    (async () => {
+      if (tries === 0) {
+        await wait(0.5);
+        const answer = window.confirm('you LOST, Restart the game?');
+        if (answer) {
+          restartGame();
+          setPrev(-1);
+        } else {
+          setTries('You Lost');
+        }
+      }
+    })();
+  }, [tries, restartGame, setTries]);
+
   function wait(seconds) {
-    return new Promise(resolve => {
-       setTimeout(resolve, seconds * 1000);
-    });
- } 
+    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+  }
 
   const correctGuess = (index) => {
     items[index].state = 'correct';
@@ -38,39 +37,38 @@ const Cards = ({items, setItems, tries, setTries, restartGame}) => {
     items[index].state = 'wrong';
     items[prev].state = 'wrong';
     setItems([...items]);
-      await wait(1)
-      items[index].state = '';
-      items[prev].state = '';
-      setItems([...items]);
-      setPrev(-1);
-      setTries((prevTries) => {
-        if (typeof prevTries === 'number') {
-          return (prevTries - 1)
-        } else if (typeof prevTries === 'string') {
-          return prevTries;
-        }
-      })
+    await wait(1);
+    items[index].state = '';
+    items[prev].state = '';
+    setItems([...items]);
+    setPrev(-1);
+    setTries((prevTries) => {
+      if (typeof prevTries === 'number') {
+        return prevTries - 1;
+      } else if (typeof prevTries === 'string') {
+        return prevTries;
+      }
+    });
   };
 
-  const check =  (index) => {
-     
+  const check = async(index) => {
     if (index === prev) {
       return;
     } else if (items[index].id === items[prev].id) {
       correctGuess(index);
-      const result = items.every(item => item.state === 'correct')
-      if(result) {
-        const answer = window.confirm('you WON, Restart the game?')
+      const result = items.every((item) => item.state === 'correct');
+      if (result) {
+        await wait(0.5)
+        const answer = window.confirm('you WON, Restart the game?');
         if (answer) {
-          restartGame()
-          setPrev(-1)
+          restartGame();
+          setPrev(-1);
         } else {
-          return
+          return;
         }
       }
     } else {
-       wrongGuess(index);
-    
+      wrongGuess(index);
     }
   };
 
@@ -80,8 +78,8 @@ const Cards = ({items, setItems, tries, setTries, restartGame}) => {
       setItems([...items]);
       setPrev(index);
     } else {
-      if (items.filter(card => card.state === 'wrong').length > 1) {
-        return
+      if (items.filter((card) => card.state === 'wrong').length > 1) {
+        return;
       } else {
         check(index);
       }

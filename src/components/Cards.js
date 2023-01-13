@@ -23,7 +23,7 @@ const Cards = ({ items, setItems, tries, setTries, restartGame }) => {
   }, [tries, restartGame, setTries]);
 
   function wait(seconds) {
-    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
   }
 
   const correctGuess = (index) => {
@@ -51,14 +51,14 @@ const Cards = ({ items, setItems, tries, setTries, restartGame }) => {
     });
   };
 
-  const check = async(index) => {
+  const check = async (index) => {
     if (index === prev) {
       return;
     } else if (items[index].id === items[prev].id) {
       correctGuess(index);
       const result = items.every((item) => item.state === 'correct');
       if (result) {
-        await wait(0.5)
+        await wait(0.5);
         const answer = window.confirm('you WON, Restart the game?');
         if (answer) {
           restartGame();

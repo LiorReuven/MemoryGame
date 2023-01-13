@@ -27,22 +27,34 @@ function App() {
   );
 
   const restartGame = () => {
-    const restart = items.map((item) => ({ ...item, state: '' })).sort(() => Math.random() - 0.5);
+    const restart = items
+      .map((item) => ({ ...item, state: '' }))
+      .sort(() => Math.random() - 0.5);
     setItems([...restart]);
-    setTries(10)
-  }
+    setTries(10);
+  };
 
   const newGameHandler = () => {
-    restartGame()
-    setShowGame(true)
+    restartGame();
+    setShowGame(true);
   };
 
   return (
     <div className="App">
       <h1>Lior Reuven's Memory Game</h1>
-      {showGame &&<h2>Tries: {tries}</h2>}
-      <button className='btn' onClick={newGameHandler}>{showGame? 'Restart Game' : 'New Game'}</button>
-      {showGame && <Cards restartGame={restartGame} tries={tries} setTries={setTries} items={items} setItems={setItems} />}
+      {showGame && <h2>Tries: {tries}</h2>}
+      <button className="btn" onClick={newGameHandler}>
+        {showGame ? 'Restart Game' : 'New Game'}
+      </button>
+      {showGame && (
+        <Cards
+          restartGame={restartGame}
+          tries={tries}
+          setTries={setTries}
+          items={items}
+          setItems={setItems}
+        />
+      )}
     </div>
   );
 }
